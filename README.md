@@ -1,8 +1,8 @@
-# Memory Layer
+# Memory AI
 
 A powerful, easy-to-use memory system for building AI-powered applications. 
 
-Instead of building a basic LLM integration (via providers like OpenAI, Google, or Anthropic) and then struggling with the complexity of creating a custom memory system (working memory, long-term storage, retrieval, and analysis), **Memory Layer** handles it all for you automatically out of the box.
+Instead of building a basic LLM integration (via providers like OpenAI, Google, or Anthropic) and then struggling with the complexity of creating a custom memory system (working memory, long-term storage, retrieval, and analysis), **Memory AI** handles it all for you automatically out of the box.
 
 Just import the package, configure three models, and boom—everything is automatically handled!
 
@@ -17,7 +17,7 @@ Just import the package, configure three models, and boom—everything is automa
 ## Installation
 
 ```bash
-npm install memory-layer
+npm install memory-ai
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ Here is a basic example of how to use the `MemoryEngine`. You need to provide co
 3. **Memory Analyzer Model**: Analyzes conversations to extract and store important facts to long-term storage.
 
 ```javascript
-const MemoryEngine = require("memory-layer");
+const MemoryEngine = require("memory-ai");
 
 async function main() {
     // 1. Initialize the Memory Engine
@@ -72,7 +72,7 @@ main();
 
 ## How It Works
 
-Under the hood, **Memory Layer** utilizes a dual-memory system:
+Under the hood, **Memory AI** utilizes a dual-memory system:
 - **Working Memory:** Keeps track of the immediate conversational context to ensure continuity.
 - **Long-Term Memory:** Past interactions are analyzed and important facts are embedded and stored. When a user sends a new message, the engine retrieves pertinent long-term memories to enhance the model's prompt dynamically. 
 
