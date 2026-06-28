@@ -1,12 +1,26 @@
 {
   "name": "memory-engine-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A powerful, automated dual-memory system for building AI-powered applications with LLMs.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  
+  "keywords": [
+    "ai",
+    "memory",
+    "llm",
+    "chatbot",
+    "rag",
+    "node",
+    "persistent-memory",
+    "embeddings",
+    "nodejs",
+    "openai",
+    "gemini",
+    "anthropic"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
