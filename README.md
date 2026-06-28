@@ -1,4 +1,4 @@
-# Memory Engine
+# Memory Engine Node
 
 A powerful, easy-to-use memory system for building AI-powered applications. 
 
@@ -17,7 +17,7 @@ Just import the package, configure three models, and boom—everything is automa
 ## Installation
 
 ```bash
-npm install memory-engine
+npm install memory-engine-node
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ Here is a basic example of how to use the `MemoryEngine`. You need to provide co
 3. **Memory Analyzer Model**: Analyzes conversations to extract and store important facts to long-term storage.
 
 ```javascript
-const MemoryEngine = require("memory-engine");
+const MemoryEngine = require("memory-engine-node");
 
 async function main() {
     // 1. Initialize the Memory Engine
