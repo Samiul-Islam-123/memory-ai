@@ -14,7 +14,10 @@ class WorkingMemory {
 
     writeWorkingMemory(data) {
 
-
+        if (!data) return;
+        
+        data.user = data.user || "";
+        data.model = data.model || "";
 
         const totalTokens =
             estimateTokens(data.user) +

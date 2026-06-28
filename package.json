@@ -1,5 +1,5 @@
 {
-  "name": "memory-ai",
+  "name": "memory-engine",
   "version": "1.0.0",
   "description": "A powerful, automated dual-memory system for building AI-powered applications with LLMs.",
   "main": "index.js",

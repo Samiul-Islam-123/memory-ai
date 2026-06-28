@@ -248,7 +248,13 @@ ${conversation.model}
 
             //find memory action
             const existing_data = (await fsp.readFile(this.memoryFile, "utf8"));
-            const existing_memories = JSON.parse(existing_data);
+            let existing_memories;
+            try {
+                existing_memories = JSON.parse(existing_data);
+            } catch (e) {
+                console.warn("[MemoryEngine] Corrupted memory file during resolveMemory. Starting fresh.");
+                existing_memories = { memories: [] };
+            }
             let existing_embeddings = [];
             // console.log(existing_memories)
             for (const existing_item of existing_memories.memories) {
@@ -318,7 +324,12 @@ ${conversation.model}
 
             const file = await fsp.readFile(filePath, "utf8");
 
-            data = JSON.parse(file);
+            try {
+                data = JSON.parse(file);
+            } catch (e) {
+                console.warn("[MemoryEngine] Corrupted memory file during store. Starting fresh.");
+                data = { memories: [] };
+            }
 
             data.memories.push({
                 id: crypto.randomUUID(),
@@ -366,7 +377,13 @@ ${conversation.model}
             }
 
             const file = await fsp.readFile(filePath, "utf8");
-            const data = JSON.parse(file);
+            let data;
+            try {
+                data = JSON.parse(file);
+            } catch (e) {
+                console.warn("[MemoryEngine] Corrupted memory file during update. Cannot update.");
+                throw new Error("Memory file corrupted");
+            }
 
             if (
                 index < 0 ||
@@ -407,7 +424,13 @@ ${conversation.model}
             "utf8"
         );
 
-        const existingMemories = JSON.parse(existingData);
+        let existingMemories;
+        try {
+            existingMemories = JSON.parse(existingData);
+        } catch (e) {
+            console.warn("[MemoryEngine] Corrupted memory file during retrieval. Returning empty.");
+            return [];
+        }
 
         const similarMemories = await this.vector_engine.search({
             query: user_message,

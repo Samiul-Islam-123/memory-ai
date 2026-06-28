@@ -5,6 +5,10 @@ const WorkingMemory = require("./StorageProvider/WorkingMemory");
 class MemoryEngine{
 
     constructor(base_model_config, embedding_model_config, analyzer_model_config , storagePath) {
+        if (!base_model_config || !embedding_model_config || !analyzer_model_config) {
+            throw new Error("[MemoryEngine] Missing model configurations. Ensure base_model, embedding_model, and analyzer_model configs are provided.");
+        }
+
         this.base_model_config = base_model_config,
         this.embedding_model_config = embedding_model_config;
         this.analyzer_model_config = analyzer_model_config;
@@ -32,8 +36,12 @@ class MemoryEngine{
     const workingMemory = this.working_mem.readWorkingMemory();
 
     // Long-term retrieval
-    const longTermMemory =
-        await this.long_term_mem.RetrieveLongTermMemory(user_message);
+    let longTermMemory = [];
+    try {
+        longTermMemory = await this.long_term_mem.RetrieveLongTermMemory(user_message);
+    } catch (e) {
+        console.warn("[MemoryEngine] Long-term memory retrieval failed. Proceeding with working memory only.", e.message);
+    }
 
     const enhancedPrompt = `
 You have access to two different memory systems.
@@ -91,12 +99,19 @@ Assistant:
         model: response
     };
 
-    const analysis =
-        await this.long_term_mem.analyze(currentConversation);
+    // Run background tasks safely
+    try {
+        const analysis = await this.long_term_mem.analyze(currentConversation);
+        await this.long_term_mem.resolveMemory(analysis);
+    } catch (e) {
+        console.warn("[MemoryEngine] Background analysis and storage failed. Memory may not be updated.", e.message);
+    }
 
-    await this.long_term_mem.resolveMemory(analysis);
-
-    this.working_mem.writeWorkingMemory(currentConversation);
+    try {
+        this.working_mem.writeWorkingMemory(currentConversation);
+    } catch (e) {
+        console.warn("[MemoryEngine] Failed to write to working memory.", e.message);
+    }
 
     return response;
 }
